@@ -1,8 +1,8 @@
 @font-face {
-  font-family: "GmarketSansMedium";
-  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
-    format("woff");
-  font-weight: normal;
+  font-family: "KakaoSmallSans-Bold";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2503@1.0/KakaoSmallSans-Bold.woff2")
+    format("woff2");
+  font-weight: 700;
   font-style: normal;
 }
 
@@ -15,14 +15,27 @@
   --color-text: var(--color-white);
 
   /* colors */
-  --color-white: #fff;
-  --color-black: #050a13;
-  --color-blue: #03e8f9;
-  --color-orange: #fd6413;
-  --color-gray: #1b1e26;
+  --color-white: #f5f5f5;
+  --color-black: #1e1e2f;
+  --color-blue: #ff6f61;
+  --color-orange: #ffa600;
+  --color-gray: #2d2f45;
 
   /* size */
-  --size-max-width: 1200px;
+  --size-max-width: 1000px;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1em;
+}
+.flex-item {
+  flex: 1 1 300px;
+  padding: 1em;
+  border-radius: 8px;
 }
 
 * {
@@ -30,10 +43,46 @@
 }
 
 body {
-  font-family: "GmarketSansMedium";
+  font-size: 16px;
+  font-family: "KakaoSmallSans-Bold";
   margin: 0;
+  padding: 0;
+}
+.container {
+  width: 90%;
+  max-width: var(--size-max-width);
+  margin: 0 auto;
+  padding: 2em;
+}
+@media screen and (min-width: 768px) {
+  body {
+    font-size: 18px;
+  }
+
+  .container {
+    padding: 3em;
+  }
+}
+.flex-container {
+  justify-content: space-between;
+  align-items: flex-end;
 }
 
+.flex-item:nth-child(1) {
+  order: 2;
+}
+
+.flex-item:nth-child(2) {
+  order: 1;
+}
+
+.flex-item:nth-child(3) {
+  order: 3;
+}
+
+.flex-item {
+  width: 30%;
+}
 h1,
 h2,
 h3,
@@ -70,7 +119,7 @@ button:focus {
   margin: 1rem 0;
 }
 .description {
-  font-size: 1.5rem;
+  font-size: 1rem;
   margin: 0.5rem 0;
 }
 
@@ -88,12 +137,12 @@ button:focus {
 }
 .header__logo {
   display: flex;
-  align-items: center;
+  align-items: left;
   gap: 8px;
 }
 .header__logo__img {
-  width: 36px;
-  height: 36px;
+  width: 30px;
+  height: 30px;
 }
 .header__logo__title {
   font-size: 1.8rem;
@@ -121,14 +170,14 @@ button:focus {
   text-align: center;
 }
 .home__avatar {
-  width: 250px;
-  height: 250px;
-  border-radius: 100%;
+  width: 200px;
+  height: 200px;
+  border-radius: 70%;
   border: 3px solid var(--color-accent);
   object-fit: cover; /* 이미지가 부모 요소의 크기에 맞춰 비율을 유지하면서 꽉 차도록 설정 */
 }
 .home__title {
-  font-size: 3rem;
+  font-size: 2rem;
   margin-bottom: 1rem;
 }
 .home__title--string {
@@ -154,31 +203,28 @@ button:focus {
 
 /* about */
 .skills {
-  display: flex;
+  display: grid;
   justify-content: space-between;
   gap: 1rem;
-  margin: 2.5rem 0;
+  margin: 2rem 0;
 }
 .skill {
-  background-color: var(--color-primary-variant);
+  background-color: gray;
   padding: 2rem 1rem;
-  color: var(--color-text);
+  color: #f5f5f5;
   border-radius: 1rem;
-  cursor: default;
+  cursor: pointer;
   box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.4);
 }
 .skill__icon {
-  font-size: 4rem;
+  font-size: 3rem;
   margin: 1rem 0;
-  color: var(--color-accent);
-  transition: all 300ms ease;
+  color: greenyellow;
 }
-.skill:hover .skill__icon {
-  transform: rotate(-15deg) scale(1.2);
-}
+
 .skill__title {
   font-size: 1.5rem;
-  font-weight: bold;
+  font-weight: lighter;
   margin-bottom: 1rem;
 }
 .jobs {
@@ -190,22 +236,11 @@ button:focus {
   gap: 8px;
   margin-bottom: 1rem;
 }
-.job__img {
-  width: 300px;
-  height: 200px;
-}
-.job__name {
-  color: var(--color-primary);
-}
-.job__period {
-  color: var(--color-primary);
-  font-size: 0.8rem;
-}
 
 /* skills */
 #skills {
-  background-color: var(--color-primary-variant);
-  color: var(--color-text);
+  background-color: darkgray;
+  color: white;
 }
 .tools {
   display: grid;
@@ -215,15 +250,19 @@ button:focus {
   overflow: hidden;
 }
 .tools__title {
-  color: var(--color-accent);
+  color: black;
   margin: 1rem 0;
   font-size: 1.2rem;
 }
 .tools__coding {
+  color: whitesmoke;
   grid-row: span 2; /* 2개의 행을 차지하도록 설정 */
-  padding: 1rem;
-  background-color: var(--color-primary);
+  display: flex;
+  flex-direction: column;
+  padding: 3rem;
+  gap: 0.5rem;
 }
+
 .bar {
   display: flex;
   flex-direction: column;
@@ -236,47 +275,23 @@ button:focus {
 }
 .bar__bg {
   width: 100%;
-  height: 3px;
-  background-color: var(--color-primary-variant);
+  height: 2px;
+  background-color: #f5f5f5;
 }
 .bar__value {
   height: 3px;
-  background-color: var(--color-accent);
+  background-color: purple;
 }
+
 .tools__tools {
-  padding: 1rem;
+  padding: 2rem;
 }
 .tools__etc {
-  padding: 1rem;
+  padding: 3rem;
   background-color: var(--color-primary);
   filter: brightness(150%);
 }
 
-/* work */
-#work {
-  background-color: var(--color-primary);
-  color: var(--color-text);
-}
-.categories {
-  display: flex;
-  justify-content: center;
-  margin: 2.5rem;
-  gap: 1rem;
-}
-.category {
-  position: relative;
-  color: var(--color-text);
-  font-size: 1.1rem;
-  padding: 0.5rem 3rem;
-  border-radius: 4px;
-  border: 1px solid var(--color-accent);
-  cursor: pointer;
-  white-space: nowrap;
-}
-.category--selected {
-  background-color: var(--color-accent);
-  color: var(--color-primary);
-}
 .category__count {
   opacity: 0;
   position: absolute;
@@ -290,60 +305,12 @@ button:focus {
   color: var(--color-text);
   transition: all 250ms ease-in;
 }
-.category--selected .category__count,
-.category:hover .category__count {
-  opacity: 1;
-  top: 0;
-}
-.projects {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  gap: 1rem;
-}
-.project {
-  position: relative;
-  border-radius: 8px;
-  overflow: hidden;
-}
-.project__img {
-  width: 100%;
-}
-.project__metadata {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--color-black);
-  opacity: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  transition: all 250ms ease-in;
-  transform: translateY(-10px);
-}
-.project__metadata:hover {
-  opacity: 0.8;
-  transform: translateY(0px);
-}
+
 /*
     after: 요소 뒤에 가상의 요소를 하나 만들어주는 선택자
     content: "" 아무 내용도 없는 빈 가상 요소를 만듦
     display: block; 가상 요소를 블록 요소처럼 만들어서 크기를 줄 수 있게 함
   */
-.project__title:after {
-  content: "";
-  display: block;
-  position: relative;
-  left: 50%;
-  transform: translate(-50%);
-  margin: 0.5rem 0;
-  width: 50px;
-  height: 2px;
-  background-color: var(--color-accent);
-}
 
 /*license*/
 .liecenses {
@@ -380,14 +347,13 @@ button:focus {
 .arrow-up {
   background-color: var(--color-primary);
   position: fixed;
-  bottom: 3rem;
-  right: 3rem;
+  bottom: 2rem;
+  right: 2rem;
   font-size: 3rem;
-  width: 4.5rem;
-  height: 4.5rem;
-  border-radius: 100%;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 90%;
   text-align: center;
-  box-shadow: 5px 5px 0px 0px var(--color-accent);
 }
 
 /* footer */
