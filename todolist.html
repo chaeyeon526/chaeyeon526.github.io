@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>To-do list</title>
+  </head>
+  <body>
+    <h2>My to-do list✔️</h2>
+    <input id="todoInput" placeholder="할 일을 입력하세요" />
+    <button onclick="addTodo()">추가</button>
+    <ul id="todoList"></ul>
+
+    <script>
+      let db;
+
+      const request = indexedDB.open("TodoDB", 1);
+
+      request.onupgradeneeded = (e) => {
+        db = e.target.result;
+        db.createObjectStore("todos", { keyPath: "id", autoIncrement: true });
+      };
+
+      request.onsuccess = (e) => {
+        db = e.target.result;
+        loadTodos();
+      };
+
+      function addTodo() {
+        const input = document.getElementById("todoInput");
+        const text = input.value.trim();
+        if (!text) return;
+
+        const tx = db.transaction("todos", "readwrite");
+        const store = tx.objectStore("todos");
+        store.add({ text });
+
+        tx.oncomplete = () => {
+          input.value = "";
+          loadTodos();
+        };
+      }
+
+      function updateTodo(id) {
+        const newText = document.getElementById("edit-" + id).value.trim();
+        if (!newText) return;
+
+        const tx = db.transaction("todos", "readwrite");
+        const store = tx.objectStore("todos");
+        store.put({ id, text: newText });
+
+        tx.oncomplete = loadTodos;
+      }
+
+      function deleteTodo(id) {
+        const tx = db.transaction("todos", "readwrite");
+        const store = tx.objectStore("todos");
+        store.delete(id);
+
+        tx.oncomplete = loadTodos;
+      }
+
+      function editTodo(id, oldText) {
+        const li = document.getElementById("todo-" + id);
+        li.innerHTML = `
+        <input id="edit-${id}" value="${oldText}" />
+        <button onclick="updateTodo(${id})">저장</button>
+        <button onclick="loadTodos()">취소</button>
+      `;
+      }
+
+      function loadTodos() {
+        const list = document.getElementById("todoList");
+        list.innerHTML = "";
+
+        const tx = db.transaction("todos", "readonly");
+        const store = tx.objectStore("todos");
+        const request = store.openCursor();
+
+        request.onsuccess = (e) => {
+          const cursor = e.target.result;
+          if (cursor) {
+            const { id, text } = cursor.value;
+            const li = document.createElement("li");
+            li.id = "todo-" + id;
+            li.innerHTML = `
+            ${text}
+            <button onclick="editTodo(${id}, '${text.replace(
+              /'/g,
+              "\\'"
+            )}')">수정</button>
+            <button onclick="deleteTodo(${id})">삭제</button>
+          `;
+            list.appendChild(li);
+            cursor.continue();
+          }
+        };
+      }
+    </script>
+  </body>
+</html>
